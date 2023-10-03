@@ -82,7 +82,7 @@ rules:
     name: kafka_server_brokerstate
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Partition : Number of partitions for each broker
@@ -97,7 +97,7 @@ rules:
       topic: $2
       partition: $3
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaController :
   #
@@ -107,7 +107,7 @@ rules:
     name: kafka_controller_$1
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # ControllerStats : The event that is currently being processed by the elected broker controller.
@@ -122,7 +122,7 @@ rules:
     labels:
       aggregate: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # Coordinator : GroupMetadataManager
   #
@@ -132,7 +132,7 @@ rules:
     name: kafka_coordinator_group_metadata_manager_$1
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # Logs :
   #
@@ -144,7 +144,7 @@ rules:
       topic: $2
       partition: $3
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # LogCleaner :
@@ -153,19 +153,19 @@ rules:
     name: kafka_log_cleaner_recopy_percent
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: kafka.log<type=LogCleaner, name=max-clean-time-secs><>(Value)
     name: kafka_log_cleaner_max_clean_time_secs
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: kafka.log<type=LogCleaner, name=max-buffer-utilization-percent><>(Value)
     name: kafka_log_cleaner_max_buffer_utilization_percent
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # LogCleanerManager :
@@ -174,7 +174,7 @@ rules:
     name: kafka_log_cleaner_manager_max_dirty_percent
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # LogFlushStats :
@@ -184,7 +184,7 @@ rules:
     labels:
       aggregate: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaRequestHandlerPool : Latency
   #
@@ -195,7 +195,7 @@ rules:
     labels:
       aggregate: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Network Socket Server : Latency
@@ -206,7 +206,7 @@ rules:
     name: kafka_network_socket_server_processor_avg_idle_percent
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Network Processor : Latency
@@ -218,7 +218,7 @@ rules:
     labels:
       processor: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Network KafkaRequestChannel :
@@ -230,7 +230,7 @@ rules:
     labels:
       queue: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Network KafkaRequest :
@@ -244,7 +244,7 @@ rules:
       version: $2
       aggregate: $3
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Network KafkaRequestMetrics :
@@ -262,7 +262,7 @@ rules:
       request: $2
       aggregate: $3
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer / BrokerTopicMetrics - I/O metrics :
@@ -276,7 +276,7 @@ rules:
     labels:
       aggregate: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: kafka.server<type=BrokerTopicMetrics, name=(BytesInPerSec|BytesOutPerSec|MessagesInPerSec|ReplicationBytesOutPerSec|ReplicationBytesInPerSec), topic=([^,]+)><>(OneMinute)Rate
     name: kafka_server_broker_topic_metrics_$1_rate
@@ -284,7 +284,7 @@ rules:
       topic: $2
       aggregate: $3
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer / DelayedFetchMetrics :
   #-------------------------------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ rules:
       fetcher_type: $1
       aggregate: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer / DelayedOperationPurgatory :
   #-------------------------------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ rules:
     labels:
       operation: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # FetcherLagMetrics : Lag in number of messages per follower replica
   #-------------------------------------------------------------------------------------------------------
@@ -314,7 +314,7 @@ rules:
       topic: $3
       partition: $4
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # FetcherStats : Replica Fetcher Thread stats
   # - BytesPerSec / RequestsPerSec
@@ -327,7 +327,7 @@ rules:
       broker_port: $4
       aggregate: $5
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer Request :
   # - request-time - Tracking request-time per user/client-id
@@ -338,7 +338,7 @@ rules:
     labels:
       client_id: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer  Fetcher/Producer :
   #-------------------------------------------------------------------------------------------------------
@@ -347,14 +347,14 @@ rules:
     labels:
       client_id: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: kafka.server<type=Produce, client-id=([^,]+)><>(byte-rate|throttle-time)
     name: kafka_server_produce_client_$2
     labels:
       client_id: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   # ReplicaManager :
   #     - IsrExpandsPerSec, IsrShrinksPerSec, FailedIsrUpdatesPerSec
@@ -365,13 +365,13 @@ rules:
     labels:
       aggregate: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: kafka.server<type=ReplicaManager, name=([^,]+)><>(Value)
     name: kafka_server_replica_manager_$1
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # ReplicaFetcherManager :
@@ -382,7 +382,7 @@ rules:
     labels:
       client_id: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # Zookeeper / SessionExpireListener :
@@ -392,7 +392,7 @@ rules:
     labels:
       aggregate: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # ControllerChannelMetrics:
@@ -402,7 +402,7 @@ rules:
     labels:
       broker_id: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   #-------------------------------------------------------------------------------------------------------
   # KafkaServer / Socket Server Metrics
@@ -412,7 +412,7 @@ rules:
     labels:
       network_processor: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   #-------------------------------------------------------------------------------------------------------
   #
   # Broker / JVM
@@ -424,21 +424,21 @@ rules:
     labels:
       name: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: 'java.lang<type=GarbageCollector, name=(.*)><>CollectionTime'
     name: kafka_jvm_gc_collection_time
     labels:
       name: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   - pattern: java.lang<type=GarbageCollector,name=(.*)><LastGcInfo, duration>
     name: kafka_jvm_last_gc_duration
     labels:
       name: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
     attrNameSnakeCase: true
 
   - pattern: 'java.lang<type=GarbageCollector, name=([^,]+), key=(.*)><LastGcInfo, memoryUsage(\w+)Gc>(\w+)'
@@ -448,7 +448,7 @@ rules:
       space: $2
       type: $4
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
     attrNameSnakeCase: true
 
   # JVM Memory
@@ -457,7 +457,7 @@ rules:
     labels:
       type: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
     attrNameSnakeCase: true
 
   - pattern: java.lang<type=Memory><NonHeapMemoryUsage>(\w*)
@@ -465,7 +465,7 @@ rules:
     labels:
       type: $1
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
     attrNameSnakeCase: true
 
   - pattern: 'java.lang<type=MemoryPool, name=(.*)><CollectionUsage>(\w*)'
@@ -474,28 +474,28 @@ rules:
       name: $1
       type: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   - pattern: 'java.lang<type=MemoryPool, name=(.*)><Usage>(\w*)'
     name: kafka_jvm_memory_pool_usage
     labels:
       name: $1
       type: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
   - pattern: 'java.lang<type=MemoryPool, name=(.*)><PeakUsage>(\w*)'
     name: kafka_jvm_memory_pool_peak_usage
     labels:
       name: $1
       type: $2
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
 
   # JVM Thread
   - pattern: java.lang<type=Threading><>(\w*thread_count)
     name: kafka_jvm_$1
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
     attrNameSnakeCase: true
 
   # Operating System
@@ -503,4 +503,4 @@ rules:
     name: kafka_jvm_os_$1
     labels:
       service: kafka-broker
-      env: cluster-demo
+      env: kafka_cluster
