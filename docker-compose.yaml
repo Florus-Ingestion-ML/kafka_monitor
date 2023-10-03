@@ -10,3 +10,9 @@ services:
     volumes:
      - ./etc/jmx_exporter/config_kafka.yml:/etc/jmx_exporter/config.yml
     container_name: kafka_node_1
+    networks:
+      - kafka_net
+
+networks:
+  kafka_net:
+    external: true
