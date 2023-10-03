@@ -13,6 +13,8 @@ services:
     container_name: grafana
     depends_on:
      - prometheus
+    networks:
+      - kafka_net
 
   prometheus:
     image: prom/prometheus:v2.45.0
@@ -22,6 +24,8 @@ services:
      - ./etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command: "--config.file=/etc/prometheus/prometheus.yml"
     container_name: prometheus
+    networks:
+      - kafka_net
 
   kafka_node_1:
     image: "sscaling/jmx-prometheus-exporter:0.12.0"
@@ -33,3 +37,9 @@ services:
     volumes:
      - ./etc/jmx_exporter/config_kafka.yml:/etc/jmx_exporter/config.yml
     container_name: kafka_node_1
+    networks:
+      - kafka_net
+
+networks:
+  kafka_net:
+    external: true
